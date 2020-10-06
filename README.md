@@ -1,2 +1,2 @@
 # hunterking.info
-http://hunterking.info/ to see my portfolio website.
+https://hunterking.info/ to see my portfolio website.
