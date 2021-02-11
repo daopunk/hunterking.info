@@ -205,6 +205,7 @@ body {
     display: inline-block;
     text-decoration: none;
     padding: 1rem;
+    padding-bottom: 1.5rem;
     transition: all .6s; }
   .btn-text__header {
     background-color: rgba(255, 100, 160, 0.4); }
@@ -223,9 +224,8 @@ body {
 
 input[type='checkbox'] {
   z-index: 5;
-  -webkit-appearance: none;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2.25rem;
+  height: 2.25rem;
   background: #fff;
   border: none;
   display: inline-block; }
@@ -473,13 +473,13 @@ details > summary:first-of-type {
   background-blend-mode: screen;
   z-index: 100; }
   .pic-projects_5 {
-    background-image: url(../../css/img/lights_out.png); }
+    background-image: url(../../css/img/lights_out1.png); }
   .pic-projects_1 {
     background-image: url(../../css/img/cypherpunk_app.png); }
   .pic-projects_2 {
     background-image: url(../../css/img/budget_monthly.png); }
   .pic-projects_3 {
-    background-image: url(../../css/img/github_search.png); }
+    background-image: url(../../css/img/cindys_tienda.png); }
   .pic-projects_4 {
     background-image: url(../../css/img/linkedup.png); }
   .pic-projects_6 {
