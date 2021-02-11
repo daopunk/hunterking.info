@@ -1,6 +1,27 @@
 <?php
-if ($_POST['submit']) {
+$human = false;
+$recaptcha_message = '';
 
+if(isset($_POST['submit'])) {
+  if(isset($_POST['g-recaptcha-response'])) {
+    $secret = '';
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
+    $response = json_decode($response);
+
+    if($response->success) {
+      // What happens when the CAPTCHA was entered incorrectly
+      $recaptcha_message = 'reCAPTHCA verification successful';
+      $human = true;
+    } else {
+        // Your code here to handle a successful verification
+      $recaptcha_message = 'reCAPTHCA verification failed';
+    }
+  }
   if (!$_POST['name']) {
     $error="<br/>- Enter your name";
   }
@@ -10,15 +31,14 @@ if ($_POST['submit']) {
   if (!$_POST['message']) {
     $error.="<br/>- Enter your message";
   }
-  if (!$_POST['check']) {
-    $error.="<br/>- Confirm you are human";
+  if ($human == false) {
+    $error.="<br/>- Check reCAPTHCA verification";
   }
   if ($error) {
     $result="<div class='alert alert-danger' 
               role='alert'><strong>There is an error! 
               Please: </strong>$error!</div>";
   }
-  
   else {
     $message = "Name: ".$_POST['name']
               ." Email: ".$_POST['email']
@@ -30,6 +50,7 @@ if ($_POST['submit']) {
       $_POST = array();
       $result="<div class='alert alert-success' role='alert'><strong>Thank you, I'll be in touch shortly.<strong></div>";
     }
+    $human = false;
   }
 }
 ?>
@@ -98,7 +119,7 @@ if ($_POST['submit']) {
       <a href="#top" class="nav__link">Home</a>
       <a href="#about" class="nav__link">About</a>
       <a href="#projects" class="nav__link">Portfolio</a>
-      <a href="https://drive.google.com/file/d/1DWEg3IwO1bDqu4t3CWdX5YVUdnPoWGWl/view?usp=sharing" 
+      <a href="https://drive.google.com/file/d/16SlAat_uQbp4hiTvgp9WMQjJh8F3qDqt/view?usp=sharing" 
       class="nav__link"
       target="_blank">Resumé</a>
       <a href="#contact" class="nav__link">Contact</a>
@@ -116,7 +137,7 @@ if ($_POST['submit']) {
           <li><a href="#top" class="burger__link">Home</a></li>
           <li><a href="#about" class="burger__link">About</a></li>
           <li><a href="#projects" class="burger__link">Portfolio</a></li>
-          <li><a href="https://drive.google.com/file/d/1DWEg3IwO1bDqu4t3CWdX5YVUdnPoWGWl/view?usp=sharing" 
+          <li><a href="https://drive.google.com/file/d/16SlAat_uQbp4hiTvgp9WMQjJh8F3qDqt/view?usp=sharing" 
           class="burger__link"
           target="_blank">Resumé</a></li>
           <li><a href="#contact" class="burger__link">Contact</a></li>
@@ -137,7 +158,7 @@ if ($_POST['submit']) {
     <div class="frame">
       <div class="profile">
           <div class="shape"></div>
-          <a href="https://drive.google.com/file/d/1DWEg3IwO1bDqu4t3CWdX5YVUdnPoWGWl/view?usp=sharing" target="_blank">
+          <a href="https://drive.google.com/file/d/16SlAat_uQbp4hiTvgp9WMQjJh8F3qDqt/view?usp=sharing" target="_blank">
           <img class="profile__pic" src="css/img/profile.jpeg" alt="Picture of Hunter King."></a>
       </div>
         <div class="bio">
@@ -244,11 +265,21 @@ if ($_POST['submit']) {
 
     <div class="container_projects">
       <div class="item">
-        <a href="https://thawing-plains-45981.herokuapp.com/" target="blank">
+        <a href="https://cindys-tienda-udtrt.ondigitalocean.app/" target="blank">
+          <div class="pic-projects pic-projects_3">
+            <div class="desc-projects desc-projects_3">
+              <h3 class="desc-projects_title">Cindy's Tienda</h3>
+              <p class="desc-projects_text">MERN Stack</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="item">
+        <a href="https://hunter-linked-up.herokuapp.com/" target="blank">
           <div class="pic-projects pic-projects_4">
             <div class="desc-projects desc-projects_4">
               <h3 class="desc-projects_title">LinkedUp</h3>
-              <p class="desc-projects_text">React, Node.js, Express, and MongoDB</p>
+              <p class="desc-projects_text">MERN Stack</p>
             </div>
           </div>
         </a>
@@ -258,7 +289,7 @@ if ($_POST['submit']) {
           <div class="pic-projects pic-projects_5">
             <div class="desc-projects desc-projects_1">
               <h3 class="desc-projects_title">Lights Out</h3>
-              <p class="desc-projects_text">JavaScript and React</p>
+              <p class="desc-projects_text">React</p>
             </div>
           </div>
         </a>
@@ -267,8 +298,8 @@ if ($_POST['submit']) {
         <a href="https://hking2.github.io/Cypherpunk_Quiz/" target="blank">
           <div class="pic-projects pic-projects_1">
             <div class="desc-projects desc-projects_1">
-              <h3 class="desc-projects_title">Cypherpunk Quiz App</h3>
-              <p class="desc-projects_text">JavaScript and JQuery</p>
+              <h3 class="desc-projects_title">Cypherpunk Quiz</h3>
+              <p class="desc-projects_text">JavaScript | JQuery</p>
             </div>
           </div>
         </a>
@@ -284,21 +315,11 @@ if ($_POST['submit']) {
         </a>
       </div>
       <div class="item">
-        <a href="https://hking2.github.io/Github_Search/" target="blank">
-          <div class="pic-projects pic-projects_3">
-            <div class="desc-projects desc-projects_3">
-              <h3 class="desc-projects_title">Github Search API</h3>
-              <p class="desc-projects_text">JavaScript, JQuery, and Bootstrap</p>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="item">
         <a href="https://hunterking.info/" target="blank">
           <div class="pic-projects pic-projects_6">
             <div class="desc-projects desc-projects_6">
               <h3 class="desc-projects_title">Portfolio Website</h3>
-              <p class="desc-projects_text">PHP, JavaScript, and Sass</p>
+              <p class="desc-projects_text">PHP | JavaScript | Sass</p>
             </div>
           </div>
         </a>
@@ -328,15 +349,15 @@ if ($_POST['submit']) {
       </div>
 
       <div class="form__section">
-        <label for="checkbox">
-          <input type="checkbox" name="check" id="checkbox" />&ensp;Please confirm humanity.
-        </label>
+        <div class="g-recaptcha" data-sitekey="6LeeJlQaAAAAACFqh0POGBO-22K5z2dSJTpihM5k"></div>
         <input type="submit" name="submit" class="submit_button" value="Submit" />
       </div>
-
       <?php echo $result; ?>
-
     </form>
+
+    <?php echo $recaptcha_message; ?>
+    <?php echo $human; ?>
+
   </section>
 
   <footer class="footer">
@@ -370,6 +391,7 @@ if ($_POST['submit']) {
     </div>
   </footer>
 
+<script src='https://www.google.com/recaptcha/api.js' async defer ></script>
 <script type="text/javascript" src="js/nodes.js"></script>
 <script type="text/javascript" src="js/canvas.js"></script>
 
